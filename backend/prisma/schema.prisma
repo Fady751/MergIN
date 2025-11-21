@@ -1,0 +1,239 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+
+enum FriendshipStatus {
+  BLOCKED   // -1
+  FRIEND    // 0
+  REQUESTED // 1
+}
+
+enum PostStatus {
+  NORMAL
+  LOOKING_FOR_JOB
+  COMPLETED
+}
+
+enum NotificationType {
+  FRIEND_REQUEST
+  COMMENT
+  REACT
+}
+
+
+model User {
+  id       Int     @id @default(autoincrement())
+  email    String  @unique
+  username String  @unique
+  password String
+  pfp      String? 
+
+  jobProfiles JobProfile[]
+}
+
+model JobProfile {
+  id      Int    @id @default(autoincrement())
+  title   String
+  userId  Int    
+  user    User   @relation(fields: [userId], references: [id])
+
+  posts           Post[]
+  comments        Comment[]
+  reacts          React[]
+  savedPosts      SavedPost[]
+  skills          UserSkill[]
+  projects        Project[] 
+  reviewsReceived Review[]  @relation("ReceivedReviews")
+  reviewsGiven    Review[]  @relation("GivenReviews")
+  
+  friendshipsSent     Friendship[] @relation("Sender")
+  friendshipsReceived Friendship[] @relation("Receiver")
+
+  notificationsSent     Notification[] @relation("NotifSender")
+  notificationsReceived Notification[] @relation("NotifReceiver")
+  
+  jobRequests JobReq[]
+  links       Link[]
+}
+
+model Friendship {
+  user1Id Int
+  user2Id Int
+  status  FriendshipStatus 
+
+  sender   JobProfile @relation("Sender", fields: [user1Id], references: [id])
+  receiver JobProfile @relation("Receiver", fields: [user2Id], references: [id])
+
+  @@id([user1Id, user2Id])
+}
+
+
+model Post {
+  id        Int        @id @default(autoincrement())
+  title     String
+  content   String
+  time      DateTime   @default(now())
+  status    PostStatus @default(NORMAL)
+  
+  authorId  Int
+  author    JobProfile @relation(fields: [authorId], references: [id])
+
+  comments    Comment[]
+  reacts      React[]
+  savedBy     SavedPost[]
+  tags        TagsOnPosts[]
+  attachments Attachment[]
+  jobReqs     JobReq[]
+}
+
+model Comment {
+  id        Int      @id @default(autoincrement())
+  content   String
+  createdAt DateTime @default(now())
+  
+  postId    Int
+  post      Post     @relation(fields: [postId], references: [id])
+  
+  authorId  Int
+  author    JobProfile @relation(fields: [authorId], references: [id])
+
+  parentId  Int?
+  parent    Comment?  @relation("CommentReplies", fields: [parentId], references: [id])
+  children  Comment[] @relation("CommentReplies")
+}
+
+model React {
+  postId    Int
+  authorId  Int
+  
+  post      Post       @relation(fields: [postId], references: [id])
+  author    JobProfile @relation(fields: [authorId], references: [id])
+
+  @@id([postId, authorId]) 
+}
+
+model SavedPost {
+  postId    Int
+  authorId  Int
+  createdAt DateTime @default(now())
+
+  post      Post       @relation(fields: [postId], references: [id])
+  author    JobProfile @relation(fields: [authorId], references: [id])
+
+  @@id([postId, authorId])
+}
+
+// --- Projects & Tasks ---
+
+model Project {
+  id        Int    @id @default(autoincrement())
+  title     String
+  content   String
+  
+  ownerId   Int
+  owner     JobProfile @relation(fields: [ownerId], references: [id])
+  
+  tasks     Task[]
+}
+
+model Task {
+  id        Int      @id @default(autoincrement())
+  title     String
+  content   String
+  status    String   
+  
+  projectId Int
+  project   Project  @relation(fields: [projectId], references: [id])
+
+  parentId  Int?
+  parent    Task?   @relation("SubTasks", fields: [parentId], references: [id])
+  subTasks  Task[]  @relation("SubTasks")
+
+}
+
+
+model Tag {
+  id    Int           @id @default(autoincrement())
+  title String
+  posts TagsOnPosts[]
+}
+
+model TagsOnPosts {
+  tagId  Int
+  postId Int
+  tag    Tag  @relation(fields: [tagId], references: [id])
+  post   Post @relation(fields: [postId], references: [id])
+
+  @@id([tagId, postId])
+}
+
+model Skill {
+  id    Int         @id @default(autoincrement())
+  title String
+  users UserSkill[]
+}
+
+model UserSkill {
+  jobProfileId Int
+  skillId      Int
+  
+  jobProfile   JobProfile @relation(fields: [jobProfileId], references: [id])
+  skill        Skill      @relation(fields: [skillId], references: [id])
+
+  @@id([jobProfileId, skillId])
+}
+
+model Link {
+  id           Int        @id @default(autoincrement())
+  url          String
+  jobProfileId Int
+  jobProfile   JobProfile @relation(fields: [jobProfileId], references: [id])
+}
+
+
+model Review {
+  id      Int    @id @default(autoincrement())
+  content String
+  rate    Int
+  
+  raterId Int
+  rater   JobProfile @relation("GivenReviews", fields: [raterId], references: [id])
+  
+  ratedId Int
+  rated   JobProfile @relation("ReceivedReviews", fields: [ratedId], references: [id])
+}
+
+model Attachment {
+  id     Int    @id @default(autoincrement())
+  awsUrl String
+  postId Int
+  post   Post   @relation(fields: [postId], references: [id])
+}
+
+model Notification {
+  id         Int              @id @default(autoincrement())
+  type       NotificationType
+  time       DateTime         @default(now())
+  
+  senderId   Int
+  sender     JobProfile       @relation("NotifSender", fields: [senderId], references: [id])
+  
+  receiverId Int
+  receiver   JobProfile       @relation("NotifReceiver", fields: [receiverId], references: [id])
+}
+
+model JobReq {
+  id           Int        @id @default(autoincrement())
+  postId       Int
+  jobProfileId Int
+  
+  post         Post       @relation(fields: [postId], references: [id])
+  applicant    JobProfile @relation(fields: [jobProfileId], references: [id])
+  
+  @@unique([postId, jobProfileId]) 
+}

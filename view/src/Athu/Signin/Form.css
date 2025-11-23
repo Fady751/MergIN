@@ -41,7 +41,7 @@
         border-radius: 8px;
         width: 300px;
         font-size: 16px;
-        }
+      }
   }
   
   .options {
@@ -58,9 +58,9 @@
     }
   
     .btn {
-      margin-top: 30px;
-      padding: 10px;
-      width: 70%;
+      margin-top: 10px;
+      padding: 9px;
+      width: 40%;
       background-color: #164085;
       color: var(--whitePrimary);
       border: none;
@@ -70,7 +70,7 @@
     }
 
     .btn:hover {
-      background-color:#105c39;
+      background-color:var(--confirm)
     }
 
 }
@@ -91,4 +91,23 @@
     margin-right: 10px;
   }
 }
-  
+.btn_google:hover{
+  background-color :rgb(194, 186, 186);
+  color: black;
+}
+.signup{
+  margin-top: 20px;
+  padding: 10px;
+  width: 300px;
+  color: var(--whitePrimary);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+
+}
+
+.signup:hover{
+background-color :rgb(194, 186, 186);
+color: black;
+}

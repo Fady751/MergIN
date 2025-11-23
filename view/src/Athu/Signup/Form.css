@@ -1,0 +1,68 @@
+
+  .signup:hover{
+  background-color : var(--confirm);
+  color: var(--whitePrimary);
+  }
+
+  .back {
+    margin-top: 20px;
+    padding: 10px;
+    width: 300px;
+    color: var(--whitePrimary);
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+  }
+  
+  .back:hover{
+
+    background-color : rgb(194, 186, 186);
+    color: black;
+  }
+
+.dropdown {
+    width: 200px;
+    position: relative;
+    font-family: sans-serif;
+  }
+  
+  .dropdown-btn {
+    width: 100%;
+    padding: 12px;
+    background: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: left;
+    cursor: pointer;
+    font-size: 14px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: 0.2s ease;
+  }
+  
+  .dropdown-btn:hover {
+    border-color: #aaa;
+  }
+  
+  .arrow {
+    font-size: 16px;
+  }
+
+.dropdown {
+  display: flex;
+  flex-direction: column;
+  gap: 15px; 
+  padding: 10px;
+  border: none;
+  border-radius: 8px;
+  width: 300px;
+  font-size: 16px;
+}
+
+.error{
+    color: var(--error);
+    font-size: 14px;
+    margin-top: 5px;
+}

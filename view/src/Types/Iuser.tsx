@@ -4,4 +4,22 @@ interface IuserLogin {
 }
 
 
+interface IuserSignup {
+    userName: string;
+    email: string;
+    password: string;
+    jobTitle: string;
+}
+
+interface IuserProfile {
+    userName: string;
+    email: string;
+    jobTitle: string;
+    bio?: string;
+    profilePhoto?: string;
+}   
+
+
+
+export type { IuserLogin, IuserSignup, IuserProfile };
 

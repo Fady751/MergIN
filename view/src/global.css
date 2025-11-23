@@ -4,7 +4,8 @@
   --secondary :#0f172a ;
   --whiteSecondary :#6b7280;
   --gray : #1e293b ;
-  --confirm : #15803d ;
+  --confirm : #105c39;
+  --error :#db2777;
 }
 
 body {

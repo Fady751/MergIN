@@ -1,0 +1,48 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Link {
+  id: Int!
+  url: String!
+  jobProfileId: Int!
+  jobProfile: JobProfile!
+}
+
+type Skill {
+  id: Int!
+  title: String!
+}
+
+type Review {
+  id: Int!
+  content: String!
+  rate: Int!
+  raterId: Int!
+  rater: JobProfile!
+  ratedId: Int!
+  rated: JobProfile!
+}
+
+type JobProfile {
+  id: Int!
+  title: String!
+  userId: Int!
+  user: User!
+  links: [Link!]
+  skills: [Skill!]
+  reviewsReceived: [Review!]
+  reviewsGiven: [Review!]
+}
+
+type User {
+  id: Int!
+  email: String!
+  username: String!
+  pfp: String
+  jobProfiles: [JobProfile!]
+}
+
+type Query {
+  user(id: Int!): User!
+}

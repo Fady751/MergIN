@@ -53,6 +53,8 @@ type Mutation {
   createUser(createUserInput: CreateUserInput!): User!
   deleteUser(id: Int!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+  addLink(createLinkInput: CreateLinkInput!): Link!
+  deleteLink(id: Int!): Link!
 }
 
 input CreateUserInput {
@@ -65,4 +67,8 @@ input UpdateUserInput {
   email: String
   username: String
   password: String
+}
+
+input CreateLinkInput {
+  url: String!
 }

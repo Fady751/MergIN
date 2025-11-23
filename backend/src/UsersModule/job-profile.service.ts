@@ -2,9 +2,22 @@ import { Injectable } from '@nestjs/common';
 import { JobProfile } from './models/jobprofile.model';
 import { Skill } from './models/skill.model';
 import { PrismaService } from 'src/prisma/prisma.service';
+import { Link } from './models/link.model';
 @Injectable()
 export class JobProfileService {
   constructor(private readonly prismaService: PrismaService) {}
+  
+  async findAll(id:number): Promise<JobProfile[]> {
+    return this.prismaService.jobProfile.findMany({
+      where: { id },
+    }) as Promise<JobProfile[]>;
+  }
+
+  async getUserByJobProfileId(jobProfileId: number) {
+    return this.prismaService.jobProfile
+      .findUnique({ where: { id: jobProfileId } })
+      .user();
+  }
 
   async findByUserId(userId: number): Promise<JobProfile[]> {
     return this.prismaService.jobProfile.findMany({
@@ -18,5 +31,12 @@ export class JobProfileService {
       include: { skill: true },
     });
     return profile.map((ps) => ps.skill) as Skill[];
+  }
+  async findLinksByUserId(userId: number):Promise<Link[]> {
+    const profiles = await this.prismaService.link.findMany({
+      where: { jobProfile: { userId } },
+      
+    });
+    return profiles as Link[];
   }
 }

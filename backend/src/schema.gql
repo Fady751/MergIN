@@ -46,5 +46,5 @@ type User {
 
 type Query {
   user(id: Int!): User!
-  jobProfiles(userid: Int!): [JobProfile!]!
+  jobProfiles(id: Int!): [JobProfile!]!
 }

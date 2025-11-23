@@ -29,7 +29,7 @@ export class JobProfileResolver {
 
     @ResolveField(() => [Link])
     async links(@Parent() jobProfile: JobProfile) {
-      return this.jobProfileService.findLinksByUserId(jobProfile.userId);
+      return this.jobProfileService.findLinksByUserId(jobProfile.id);
     }
 
 }

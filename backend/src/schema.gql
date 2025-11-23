@@ -12,6 +12,7 @@ type Link {
 type Skill {
   id: Int!
   title: String!
+  jobProfiles: [JobProfile]
 }
 
 type Review {
@@ -40,9 +41,10 @@ type User {
   email: String!
   username: String!
   pfp: String
-  jobProfiles: [JobProfile!]
+  jobProfiles: [JobProfile]
 }
 
 type Query {
   user(id: Int!): User!
+  jobProfiles(userid: Int!): [JobProfile!]!
 }

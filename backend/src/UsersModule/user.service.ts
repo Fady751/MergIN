@@ -14,6 +14,7 @@ export class UserService {
   }
 
   async getSkillsForProfile(jobProfileId: number) {
+    console.log('Fetching skills for JobProfile ID:', jobProfileId);
     const userSkills = await this.prisma.userSkill.findMany({
       where: { jobProfileId },
       include: { skill: true},

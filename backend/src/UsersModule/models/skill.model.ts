@@ -1,4 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { JobProfile } from './jobprofile.model';
 
 @ObjectType()
 export class Skill {
@@ -7,5 +8,8 @@ export class Skill {
 
   @Field()
   title: string;
+
+  @Field(() => [JobProfile], { nullable: 'itemsAndList' })
+  jobProfiles?: JobProfile[];
 
 }

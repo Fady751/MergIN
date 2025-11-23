@@ -15,6 +15,6 @@ export class User {
   @Field({ nullable: true })
   pfp?: string;
 
-  @Field(() => [JobProfile], { nullable: true })
+  @Field(() => [JobProfile], { nullable: 'itemsAndList' })
   jobProfiles?: JobProfile[];
 }

@@ -20,15 +20,9 @@ export class UsersResolver {
     return this.userService.findOne(id);
   }
 
-  // Field Resolver: When asking for a User, automatically fetch their profiles
   @ResolveField(() => [JobProfile])
   async jobProfiles(@Parent() user: User) {
-    // We use Prisma's fluent API or a service method
-    // Accessing prisma directly here requires injecting PrismaService, 
-    // but better practice is to ask the Service layer.
-    // For simplicity, assuming the user object might already have it or we fetch it:
-    // In a real app, create a method in UsersService like `findProfilesByUserId(user.id)`
-    return []; // Implement in service based on your preference
+    return this.userService.findProfileByUserId(user.id);
   }
 }
 

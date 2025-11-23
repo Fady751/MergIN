@@ -1,9 +1,9 @@
 import { Resolver, ResolveField, Parent, Query, Args, Int } from '@nestjs/graphql';
-import { JobProfile } from '../models/jobprofile.model';
-import { Skill } from '../models/skill.model';
+import { JobProfile } from '../../GraphQLSchemas/jobprofile.model';
+import { Skill } from '../../GraphQLSchemas/skill.model';
 import { JobProfileService } from '../job-profile.service';
-import { User } from '../models/user.model';
-import { Link } from '../models/link.model';
+import { User } from '../../GraphQLSchemas/user.model';
+import { Link } from '../../GraphQLSchemas/link.model';
 
 @Resolver(() => JobProfile)
 export class JobProfileResolver {

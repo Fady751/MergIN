@@ -1,8 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import { JobProfile } from './models/jobprofile.model';
-import { Skill } from './models/skill.model';
+import { JobProfile } from '../GraphQLSchemas/jobprofile.model';
+import { Skill } from '../GraphQLSchemas/skill.model';
 import { PrismaService } from 'src/prisma/prisma.service';
-import { Link } from './models/link.model';
+import { Link } from '../GraphQLSchemas/link.model';
 @Injectable()
 export class JobProfileService {
   constructor(private readonly prismaService: PrismaService) {}

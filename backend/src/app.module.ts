@@ -9,6 +9,8 @@ import { PrismaModule } from './prisma/prisma.module';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
+import { LinkModule } from './link/link.module';
+import { SkillModule } from './skill/skill.module';
 
 @Module({
   imports: [
@@ -35,6 +37,8 @@ import { join } from 'path';
     }),
     PrismaModule,
     UserModule,
+    LinkModule,
+    SkillModule,
   ],
   controllers: [AppController],
   providers: [AppService],

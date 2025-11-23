@@ -1,7 +1,7 @@
 import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
 import { UserService } from '../user.service';
-import { User } from '../models/user.model';
-import { JobProfile } from '../models/jobprofile.model';
+import { User } from '../../GraphQLSchemas/user.model';
+import { JobProfile } from '../../GraphQLSchemas/jobprofile.model';
 import { CreateUserInput } from '../DTOs/create-user.input';
 import { UpdateUserInput } from '../DTOs/update-user.input';
 @Resolver(() => User)

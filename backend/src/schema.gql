@@ -48,3 +48,21 @@ type Query {
   user(id: Int!): User!
   jobProfiles(id: Int!): [JobProfile!]!
 }
+
+type Mutation {
+  createUser(createUserInput: CreateUserInput!): User!
+  deleteUser(id: Int!): User!
+  updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+}
+
+input CreateUserInput {
+  email: String!
+  username: String!
+  password: String!
+}
+
+input UpdateUserInput {
+  email: String
+  username: String
+  password: String
+}

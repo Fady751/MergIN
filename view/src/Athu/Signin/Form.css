@@ -1,0 +1,94 @@
+
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  html, body {
+    height: 100%;
+    font-family: sans-serif;
+    background-color: var(--darkPrimary);
+  }
+  
+
+  .container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;    
+    justify-content: center; 
+    height: 100vh;          
+}
+
+    h1{
+        color: var(--whitePrimary);
+        margin-bottom: 50px;
+    }
+
+    .input-container {
+        display: flex;
+        flex-direction: column;
+        gap: 15px; 
+    
+        label {
+        margin-bottom: 5px;
+        color: var(--whitePrimary);
+        }
+    
+        input {
+        padding: 10px;
+        border: none;
+        border-radius: 8px;
+        width: 300px;
+        font-size: 16px;
+        }
+  }
+  
+  .options {
+    display: flex;
+    justify-content: space-between;
+    width: 300px;
+    margin-top: 20px;
+    
+    a {
+      color: var(--whitePrimary);
+      text-decoration: none;
+      font-size: smaller;
+      white-space: nowrap;   
+    }
+  
+    .btn {
+      margin-top: 30px;
+      padding: 10px;
+      width: 70%;
+      background-color: #164085;
+      color: var(--whitePrimary);
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background-color:#105c39;
+    }
+
+}
+.btn_google {
+  margin-top: 20px;
+  padding: 10px;
+  width: 300px;
+  color: var(--whitePrimary);
+  border: none;
+  border-radius: 8px;
+  font-size: 16px;
+  cursor: pointer;
+
+
+  svg{
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+  }
+}
+  

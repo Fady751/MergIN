@@ -1,0 +1,15 @@
+:root{
+  --darkPrimary : #020617 ;
+  --whitePrimary : #ffffff ;
+  --secondary :#0f172a ;
+  --whiteSecondary :#6b7280;
+  --gray : #1e293b ;
+  --confirm : #15803d ;
+}
+
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var( --whitePrimary );
+  color: white;
+}
+

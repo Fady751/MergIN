@@ -54,7 +54,7 @@ type AuthOutput {
 
 type Query {
   helloUser: String!
-  user(id: Int!): User!
+  user: User!
   jobProfiles(id: Int!): JobProfile
 }
 

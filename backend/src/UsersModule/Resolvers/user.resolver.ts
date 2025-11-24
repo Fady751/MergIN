@@ -54,8 +54,11 @@ helloUser(@CurrentUser() user) {
   ) {
     return this.userService.update(id, updateUserInput);
   }
+  
+  @UseGuards(GqlAuthGuard)
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => Int }) id: number) {
+  findOne(@CurrentUser() { id }: any) {
+    
     return this.userService.findOne(id);
   }
 

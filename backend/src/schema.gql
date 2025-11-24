@@ -83,7 +83,6 @@ input UpdateUserInput {
 }
 
 input CreateJobProfileInput {
-  userId: Float!
   title: String!
 }
 

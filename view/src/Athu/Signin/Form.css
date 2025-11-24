@@ -36,6 +36,7 @@
         }
     
         input {
+        background-color: #222222;
         padding: 10px;
         border: none;
         border-radius: 8px;
@@ -58,6 +59,7 @@
     }
   
     .btn {
+      background-color: var(--input);
       margin-top: 10px;
       padding: 9px;
       width: 40%;
@@ -83,7 +85,7 @@
   border-radius: 8px;
   font-size: 16px;
   cursor: pointer;
-
+  background-color: var(--input);
 
   svg{
     width: 20px;
@@ -96,6 +98,7 @@
   color: black;
 }
 .signup{
+  background-color: var(--input);
   margin-top: 20px;
   padding: 10px;
   width: 300px;

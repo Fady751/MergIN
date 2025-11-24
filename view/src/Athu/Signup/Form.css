@@ -13,10 +13,10 @@
     border-radius: 8px;
     font-size: 16px;
     cursor: pointer;
+    background-color: var(--input);
   }
   
   .back:hover{
-
     background-color : rgb(194, 186, 186);
     color: black;
   }

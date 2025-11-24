@@ -17,7 +17,6 @@ export class JobProfileService {
     });
     return newJobProfile as unknown as JobProfile;
   }
-  
   async update(updateJobProfileInput: UpdateJobProfileInput , curProfileId: number): Promise<JobProfile> {
 
     const updatedJobProfile = await this.prismaService.jobProfile.update({
@@ -27,6 +26,11 @@ export class JobProfileService {
       },
     });
     return updatedJobProfile as unknown as JobProfile;
+  }
+  async delete(profileId:number){
+    return this.prismaService.jobProfile.delete({
+      where:{id:profileId}
+    }); 
   }
   async findAll(id:number, curUSerId:number): Promise<JobProfile | null> {
 

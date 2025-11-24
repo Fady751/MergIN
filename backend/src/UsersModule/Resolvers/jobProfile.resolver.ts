@@ -32,7 +32,12 @@ export class JobProfileResolver {
     return this.jobProfileService.update(updateJobProfileInput, user.profileId); 
   }
 
-  
+  @Mutation(()=>JobProfile)
+  async deleteJobProfile(
+      @CurrentUser() user: any
+  ){
+    
+  }
   @Query(() => JobProfile, { name: 'jobProfiles', nullable: true })
   async getJobProfiles(
     @Args('id', { type: () => Int }) id: number,

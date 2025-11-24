@@ -63,6 +63,9 @@ type Mutation {
   loginUser(email: String!, password: String!, profileId: Int): AuthOutput!
   deleteUser(id: Int!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
+  createJobProfile(createJobProfileInput: CreateJobProfileInput!): JobProfile!
+  updateJobProfile(updateJobProfileInput: UpdateJobProfileInput!): JobProfile!
+  deleteJobProfile: JobProfile!
   addLink(createLinkInput: CreateLinkInput!): Link!
   deleteLink(id: Int!): Link!
 }
@@ -77,6 +80,15 @@ input UpdateUserInput {
   email: String
   username: String
   password: String
+}
+
+input CreateJobProfileInput {
+  userId: Float!
+  title: String!
+}
+
+input UpdateJobProfileInput {
+  title: String
 }
 
 input CreateLinkInput {

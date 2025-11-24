@@ -44,14 +44,23 @@ type User {
   jobProfiles: [JobProfile]
 }
 
+type AuthOutput {
+  id: Float!
+  email: String!
+  profileId: Float!
+  username: String!
+  accessToken: String!
+}
+
 type Query {
+  helloUser: String!
   user(id: Int!): User!
   jobProfiles(id: Int!): [JobProfile!]!
-  helloUser: String!
 }
 
 type Mutation {
-  createUser(createUserInput: CreateUserInput!): User!
+  createUser(createUserInput: CreateUserInput!): AuthOutput!
+  loginUser(email: String!, password: String!): AuthOutput!
   deleteUser(id: Int!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   addLink(createLinkInput: CreateLinkInput!): Link!

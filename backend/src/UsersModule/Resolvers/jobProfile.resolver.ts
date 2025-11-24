@@ -19,7 +19,6 @@ export class JobProfileResolver {
     }
 
 
-    @UseGuards(GqlAuthGuard)
     @ResolveField(() => [Skill])
     async skills(@Parent() jobProfile: JobProfile) {
         console.log('*** skills field resolver called ***');

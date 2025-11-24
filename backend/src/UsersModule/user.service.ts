@@ -10,7 +10,11 @@ export class UserService {
     return this.prisma.user.create({ data });
   }
 
-  async delete(id: number) {
+  async delete(id: number, curUser?: any) {
+    console.log('Current User:', curUser);
+    if (curUser?.id !== id) {
+      throw new Error('Unauthorized to delete this user');
+    }
     return this.prisma.user.delete({ where: { id } });
   }
   async update(id: number, data: UpdateUserInput) {

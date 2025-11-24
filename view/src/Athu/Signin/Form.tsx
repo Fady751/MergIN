@@ -14,10 +14,10 @@ function signIn() {
 
   // setError("invalid email or password");
 
-  // handle submit function
-  // const HandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-  //     event.preventDefault();
-  // }
+  const HandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+      event.preventDefault();
+      setError("");
+  }
 
   const HandleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();

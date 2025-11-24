@@ -40,10 +40,11 @@
     justify-content: space-between;
     align-items: center;
     transition: 0.2s ease;
+    background-color: var(--input);
   }
   
   .dropdown-btn:hover {
-    border-color: #aaa;
+    border-color: #b4b2b2;
   }
   
   .arrow {
@@ -59,6 +60,7 @@
   border-radius: 8px;
   width: 300px;
   font-size: 16px;
+  background-color: var(--input);
 }
 
 .error{

@@ -32,6 +32,7 @@ function signup() {
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     event.preventDefault();
+    setPasswordError("");
 
     if (Data.password !== Data.confirmPassword) {
       setPasswordError("Password doesn't Match!");

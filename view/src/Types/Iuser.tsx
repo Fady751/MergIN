@@ -20,6 +20,11 @@ interface IuserProfile {
 }   
 
 
+interface IusersOnline{
+    userName: string;
+    pfp: string;
+}
 
-export type { IuserLogin, IuserSignup, IuserProfile };
+
+export type { IuserLogin, IuserSignup, IuserProfile , IusersOnline};
 

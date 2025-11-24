@@ -7,10 +7,16 @@ import { Link } from '../GraphQLSchemas/link.model';
 export class JobProfileService {
   constructor(private readonly prismaService: PrismaService) {}
   
-  async findAll(id:number): Promise<JobProfile[]> {
-    return this.prismaService.jobProfile.findMany({
+  async findAll(id:number, curUSerId:number): Promise<JobProfile | null> {
+
+    const idProfile = await this.prismaService.jobProfile.findUnique({
       where: { id },
-    }) as Promise<JobProfile[]>;
+      include: { user: true },
+    });
+    if (!idProfile || idProfile.userId !== curUSerId) {
+      return null;
+    }
+    return idProfile as unknown as JobProfile;
   }
 
   async getUserByJobProfileId(jobProfileId: number) {

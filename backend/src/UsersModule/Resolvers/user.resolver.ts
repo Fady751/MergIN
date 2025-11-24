@@ -33,9 +33,11 @@ helloUser(@CurrentUser() user) {
   async loginUser(
     @Args('email') email: string,
     @Args('password') password: string,
+    //oprional profileId argument
+    @Args('profileId', { type: () => Int, nullable: true }) profileId?: number,  
   ) {
     const user = await this.authService.validateUser(email, password);
-    return this.authService.loginGetPayload(user);
+    return this.authService.loginGetPayload(user, profileId);
   }
   @UseGuards(GqlAuthGuard)
   @Mutation(() => User)

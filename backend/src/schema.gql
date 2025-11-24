@@ -55,12 +55,12 @@ type AuthOutput {
 type Query {
   helloUser: String!
   user(id: Int!): User!
-  jobProfiles(id: Int!): [JobProfile!]!
+  jobProfiles(id: Int!): JobProfile
 }
 
 type Mutation {
   createUser(createUserInput: CreateUserInput!): AuthOutput!
-  loginUser(email: String!, password: String!): AuthOutput!
+  loginUser(email: String!, password: String!, profileId: Int): AuthOutput!
   deleteUser(id: Int!): User!
   updateUser(id: Int!, updateUserInput: UpdateUserInput!): User!
   addLink(createLinkInput: CreateLinkInput!): Link!

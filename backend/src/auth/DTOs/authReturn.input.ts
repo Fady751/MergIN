@@ -17,7 +17,6 @@ export class AuthOutput {
   @Field()
   username: string; 
   
-  //jwt token
     @Field()
     @IsOptional()
     accessToken: string;

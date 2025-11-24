@@ -34,18 +34,17 @@ async validateUser(email: string, cur_password: string) {
     return safeUser;
   }
 
-  async loginGetPayload(user: PayloadInput , role?: number): Promise<AuthOutput> {
+  async loginGetPayload(user: PayloadInput , profileId?: number): Promise<AuthOutput> {
     const payload = {
       sub: user.id,
       email: user.email,
-      profileId: user.profileId ?? null,
-      role: role ?? -1,
+      profileId: profileId ?? undefined,
     };
     const token = await this.jwtService.signAsync(payload);
     return {
       id: user.id,
       email: user.email,
-      profileId: user.profileId,
+      profileId: profileId ?? undefined,
       username: (user as any).username,
       accessToken: token,
     };

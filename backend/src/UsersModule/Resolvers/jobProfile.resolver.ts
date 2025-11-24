@@ -6,16 +6,20 @@ import { User } from '../../GraphQLSchemas/user.model';
 import { Link } from '../../GraphQLSchemas/link.model';
 import { GqlAuthGuard } from 'src/auth/guards/gql-auth.guard';
 import { UseGuards } from '@nestjs/common';
+import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 
+@UseGuards(GqlAuthGuard)
 @Resolver(() => JobProfile)
 export class JobProfileResolver {
   constructor(private readonly jobProfileService: JobProfileService) {}
   
-  @Query(() => [JobProfile], { name: 'jobProfiles' })
+  @Query(() => JobProfile, { name: 'jobProfiles', nullable: true })
   async getJobProfiles(
-    @Args('id', { type: () => Int }) id: number)
-    : Promise<JobProfile[]> {
-      return this.jobProfileService.findAll(id);
+    @Args('id', { type: () => Int }) id: number,
+    @CurrentUser() user: any
+  )
+    : Promise<JobProfile|null> {
+      return this.jobProfileService.findAll(id,user.id);
     }
 
 
@@ -25,13 +29,11 @@ export class JobProfileResolver {
     return this.jobProfileService.findSkillsByProfileId(jobProfile.id);
     }
 
-    @UseGuards(GqlAuthGuard)
     @ResolveField(() => User)
     async user(@Parent() jobProfile: JobProfile) {
         return this.jobProfileService.getUserByJobProfileId(jobProfile.id);
     }
-
-    @UseGuards(GqlAuthGuard)
+    
     @ResolveField(() => [Link])
     async links(@Parent() jobProfile: JobProfile) {
       return this.jobProfileService.findLinksByUserId(jobProfile.id);

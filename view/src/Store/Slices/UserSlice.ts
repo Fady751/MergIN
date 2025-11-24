@@ -1,0 +1,75 @@
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import { getUserById } from '../../Service/UserService'; // Adjust path as necessary
+import type { IuserProfile as User } from '../../Types/Iuser';
+
+interface UserState {
+  user: User | null;
+  token: string | null;
+  error: string | null;
+  loading: boolean;
+  isLoggedIn: boolean;
+}
+
+// Initial state
+const initialState: UserState = {
+  user: null,
+  token: null,
+  error: null,
+  loading: false,
+  isLoggedIn: false,
+};
+
+// Async thunk
+export const fetchUser = createAsyncThunk<{ user: User }, number>(
+  'user/fetchUser',
+  async (id: number) => {
+    const user = await getUserById(id);
+    if (!user) throw new Error('User not found');
+    return { user };
+  }
+);
+
+// Slice
+const userSlice = createSlice({
+  name: 'userSlice',
+  initialState,
+  reducers: {
+    setUser(state, action: PayloadAction<{ user: User; token?: string }>) {
+      state.user = action.payload.user;
+      state.token = action.payload.token || null;
+      state.error = null;
+      state.loading = false;
+      state.isLoggedIn = true;
+    },
+    clearUser(state) {
+      state.user = null;
+      state.token = null;
+      state.error = null;
+      state.loading = false;
+      state.isLoggedIn = false;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchUser.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(fetchUser.fulfilled, (state, action) => {
+        state.user = action.payload.user;
+        state.token = localStorage.getItem('token') || null;
+        state.loading = false;
+        state.error = null;
+        state.isLoggedIn = true;
+      })
+      .addCase(fetchUser.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.error.message || 'Failed to fetch user';
+      });
+  },
+});
+
+export const { setUser, clearUser } = userSlice.actions;
+
+export default userSlice.reducer;

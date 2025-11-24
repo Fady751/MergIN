@@ -11,13 +11,20 @@ interface IuserSignup {
     jobTitle: string;
 }
 
+interface JobProfile {
+    id: number;
+    userId?: number;
+    title: string;
+}
+
 interface IuserProfile {
+    id: number;
     userName: string;
     email: string;
-    jobTitle: string;
-    bio?: string;
-    profilePhoto?: string;
-}   
+    bio?: string; // backend needs to be updated to include bio
+    pfp?: string; // profile picture
+    JobProfiles?: JobProfile[];
+}
 
 
 interface IusersOnline{
@@ -26,5 +33,5 @@ interface IusersOnline{
 }
 
 
-export type { IuserLogin, IuserSignup, IuserProfile , IusersOnline};
+export type { IuserLogin, IuserSignup, IuserProfile , IusersOnline, JobProfile};
 

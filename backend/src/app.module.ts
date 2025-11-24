@@ -11,6 +11,7 @@ import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
 import { LinkModule } from './link/link.module';
 import { SkillModule } from './skill/skill.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
@@ -33,12 +34,14 @@ import { SkillModule } from './skill/skill.module';
      GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       autoSchemaFile: join(process.cwd(), 'src/schema.gql'), // Automatically generates schema
-      playground: true, // Enables the interactive playground
+      playground: true, // Enables the interactive playground,
+      context: ({ req }) => ({ req }),
     }),
     PrismaModule,
     UserModule,
     LinkModule,
     SkillModule,
+    AuthModule,
   ],
   controllers: [AppController],
   providers: [AppService],

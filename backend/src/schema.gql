@@ -47,6 +47,7 @@ type User {
 type Query {
   user(id: Int!): User!
   jobProfiles(id: Int!): [JobProfile!]!
+  helloUser: String!
 }
 
 type Mutation {

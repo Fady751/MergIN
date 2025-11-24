@@ -12,10 +12,9 @@ function App() {
     <BrowserRouter>
     
     <Routes>
-
       <Route path="/" element={<SignIn/>} />
       <Route path = "/signup" element = {<SignUp/>} />
-      {/* <Route path = "online" element = {<Card children = {}> </Card>}      /> */}
+      <Route path = "/online" element = {<Card userName="Miral" pfp=""/>}></Route>
     </Routes>
     
     </BrowserRouter>

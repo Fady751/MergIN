@@ -3,14 +3,45 @@ import { JobProfile } from '../GraphQLSchemas/jobprofile.model';
 import { Skill } from '../GraphQLSchemas/skill.model';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { Link } from '../GraphQLSchemas/link.model';
+import { UpdateJobProfileInput } from './DTOs/update-jobprofile.input';
 @Injectable()
 export class JobProfileService {
   constructor(private readonly prismaService: PrismaService) {}
   
-  async findAll(id:number): Promise<JobProfile[]> {
-    return this.prismaService.jobProfile.findMany({
+  async create(createJobProfileInput: any, userId: number): Promise<JobProfile> {
+    const newJobProfile = await this.prismaService.jobProfile.create({
+      data: {
+        ...createJobProfileInput,
+        userId: userId,
+      },
+    });
+    return newJobProfile as unknown as JobProfile;
+  }
+  async update(updateJobProfileInput: UpdateJobProfileInput , curProfileId: number): Promise<JobProfile> {
+
+    const updatedJobProfile = await this.prismaService.jobProfile.update({
+      where: { id:curProfileId },
+      data: {
+       title: updateJobProfileInput.title,
+      },
+    });
+    return updatedJobProfile as unknown as JobProfile;
+  }
+  async delete(profileId:number){
+    return this.prismaService.jobProfile.delete({
+      where:{id:profileId}
+    }); 
+  }
+  async findAll(id:number, curUSerId:number): Promise<JobProfile | null> {
+
+    const idProfile = await this.prismaService.jobProfile.findUnique({
       where: { id },
-    }) as Promise<JobProfile[]>;
+      include: { user: true },
+    });
+    if (!idProfile || idProfile.userId !== curUSerId) {
+      return null;
+    }
+    return idProfile as unknown as JobProfile;
   }
 
   async getUserByJobProfileId(jobProfileId: number) {

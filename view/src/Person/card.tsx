@@ -1,5 +1,5 @@
 import "./Card.css";
-import type { IusersOnline } from "../../../Types/Iuser";
+import type { IusersOnline } from "../Types/Iuser";
 
 function Card({ userName, pfp }: IusersOnline) {
 

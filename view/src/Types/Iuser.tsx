@@ -29,7 +29,7 @@ interface IuserProfile {
 
 interface IusersOnline{
     userName: string;
-    pfp: string;
+    pfp?: string;
 }
 
 

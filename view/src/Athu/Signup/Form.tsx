@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Form.css";
 // import { IuserSignup } from "../../Types/Iuser";
+import { AddUser} from "../../Service/UserService";
 
 function signup() {
   const navigate = useNavigate();
@@ -9,30 +10,35 @@ function signup() {
   const [emailError, setEmailError] = useState("");
 
   const [Data, setData] = useState({
-    userName: "",
+    username: "",
     email: "",
     password: "",
     confirmPassword: "",
-    jobTitle: "",
+    jobId: "",
   });
 
   const HandleInputChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
   ) => {
     const { name, value } = event.target;
+
+    console.log(`Input Changed - Name: ${name}, Value: ${value}`);
+
     setData((Data) => ({
       ...Data,
       [name]: value,
     }));
   };
 
-  const HandleSubmit = (
+  const HandleSubmit = async (
     event:
       | React.FormEvent<HTMLFormElement>
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    event.preventDefault();
+
     setPasswordError("");
+    
+    console.log("Submitting signup data:", Data);
 
     if (Data.password !== Data.confirmPassword) {
       setPasswordError("Password doesn't Match!");
@@ -40,25 +46,45 @@ function signup() {
     }
 
     if (Data.password.length < 6) {
-      setPasswordError("Password must be at least 8 characters long");
+      setPasswordError("Password must be at least 6 characters long");
       return;
     }
+    
+    try {
+      const response = await AddUser({
+        username: Data.username,
+        email: Data.email,
+        password: Data.password
+      });
+
+      if(response == null){
+        setEmailError("Email already in use");
+        return;
+      }
+    
+      console.log("Signup success:", response);
+      navigate("/");
+    
+    } catch (error) {
+      console.error("Error during signup:", error);
+    }
+
   };
 
   return (
     <div className="container">
       <h1>Welcome</h1>
 
-      <form action="submit">
+      <form onSubmit={HandleSubmit}>
         <div className="input-container">
           <label htmlFor="text" className="label">
-            Username
+            UserName
           </label>
           <input
             type="text"
-            id="userName"
-            name="userName"
-            value={Data.userName}
+            id="username"
+            name="username"
+            value={Data.username}
             onChange={HandleInputChange}
             placeholder="Enter your username"
             required
@@ -77,7 +103,7 @@ function signup() {
             required
           />
 
-          {/* {error && <p className='error'>{error}</p>} */}
+          {emailError.length != 0 && <p className='error'>{emailError}</p>}
 
           <label htmlFor="password" className="label">
             Password
@@ -108,15 +134,16 @@ function signup() {
 
           <label className="label">JobTitle</label>
           <select
-            value={Data.jobTitle}
+            value={Data.jobId}
             onChange={HandleInputChange}
             className="dropdown"
-            name="jobTitle"
+            name="jobId"
             required
           >
-            <option value="male">Male</option>
-            <option value="female">Female</option>
-            <option value="other">Other</option>
+            <option value="1">Male</option>
+            <option value="2">Female</option>
+            <option value="3">Other</option>
+
           </select>
 
           <button type="button" className="signup" onClick={HandleSubmit}>

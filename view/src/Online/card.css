@@ -1,0 +1,90 @@
+.person-online-card {
+    display: flex;
+    align-items: center; /* مركز العناصر عمودي */
+    justify-content: space-between; /* الثلاث نقاط على اليمين */
+    gap: 10px;
+    padding: 5px 10px;
+    border-radius: 15px;
+    width: 240px;  /* مستطيل */
+    height: 50px;  /* ارتفاع ثابت */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.person-online-card:hover {
+    background-color: var(--gray);
+    cursor: pointer;
+}
+
+.profile-section {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+
+}
+
+.photo {
+    position: relative;
+    width: 40px;
+    height: 40px;
+}
+
+.profile-picture {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.dot {
+    position: absolute;
+    bottom: 2px; /* لازق تحت الصورة */
+    left: 95%;
+    transform: translateX(-50%);
+    width: 12px;
+    height: 12px;
+    background-color: green; /* لون Online */
+    border: 2px solid var(--darkPrimary); /* لإطار جميل */
+    border-radius: 50%;
+}
+
+.name {
+    font-size: 1em;
+
+    color: var(--text-primary);
+}
+
+.options-icon {
+    cursor: pointer;
+}
+
+
+.options-container {
+    position: relative;
+    cursor: pointer;
+  }
+  
+  .dropdown {
+    position: absolute;
+    top: 100%; /* تحت الأيقونة مباشرة */
+    right: -20px;
+    width: 150px;
+    background-color: var(--gray);
+    border: .05px #ccc;
+    border-radius: 30px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    padding: 5px 0;
+    z-index: 100;
+  }
+  
+  .dropdown p {
+    margin: 0;
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: small;
+    transition: background-color .2s;
+  }
+  
+  .dropdown p:hover {
+    background-color: var(--darkPrimary);
+    border-radius: 9px;
+  }

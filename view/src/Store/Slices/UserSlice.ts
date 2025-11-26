@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
 import { getUserById } from '../../Service/UserService'; // Adjust path as necessary
-import type { IuserProfile as User } from '../../Types/Iuser';
+import type { Iuser as User } from '../../Types/Iuser';
 
 interface UserState {
   user: User | null;
@@ -35,7 +35,7 @@ const userSlice = createSlice({
   name: 'userSlice',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<{ user: User; token?: string }>) {
+    setUser(state, action: PayloadAction<{ user: User; token: string }>) {
       state.user = action.payload.user;
       state.token = action.payload.token || null;
       state.error = null;

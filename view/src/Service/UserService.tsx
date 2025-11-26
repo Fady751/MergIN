@@ -1,7 +1,9 @@
 import type {
-  IuserProfile as User,
+  Iuser as User,
   IusersOnline as onlineUser,
   IuserSignup as signupUser,
+  IuserLogin as loginUser ,
+  IloginResponse ,
   Iadduser as token,
 } from "../Types/Iuser";
 
@@ -36,27 +38,6 @@ async function getUserById(id: number): Promise<User | null> {
   }
 }
 
-async function CheckUserEmail(email: string): Promise<boolean> {
-  const GET_USER_BY_EMAIL = gql`
-    query GetUserByEmail($email: String!) {
-      userByEmail(email: $email) {
-        id 
-      }
-    }`;
-
-  try {
-    const { data } = await client.query<{ email: string }>({
-      query: GET_USER_BY_EMAIL,
-      variables: { email },
-    });
-
-    return data == null;
-  } catch (error) {
-    // console.error("Error fetching user by email:", error);
-    return false;
-  }
-}
-
 async function AddUser({
   username,
   email,
@@ -65,12 +46,13 @@ async function AddUser({
   const Add_User = gql`
     mutation CreateUser($input: CreateUserInput!) {
       createUser(createUserInput: $input) {
-        accessToken
+      user{
+        id 
+      }
+      accessToken
       }
     }
   `;
-
-  
 
   try {
     const { data } = await client.mutate({
@@ -85,12 +67,41 @@ async function AddUser({
     });
 
     return data || null;
-  } catch (error: any) {
-    console.error("GraphQL Errors:", error?.graphQLErrors);
-    console.error("Network Error:", error?.networkError);
+  } catch (error) {
+    console.log("error on sign user up " ,error) ;
     return null;
   }
 }
 
 
-export {  AddUser, getUserById };
+async function login ({email , password} : loginUser) : Promise< IloginResponse | null >{
+
+  const query =gql`
+      mutation {
+        loginUser(email: "${email}", password: "${password}") {
+          id
+          accessToken
+        }
+      }
+    `;
+
+  try {
+
+    const {data} = await client.mutate({
+      mutation : query ,
+      variables: {
+          email,
+          password
+      },
+    });
+
+    return data || null ;
+
+  }catch(error){
+    console.log("error on login user" , error);
+    return null ;
+  }
+}
+
+
+export {  AddUser, getUserById , login };

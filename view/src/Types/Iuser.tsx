@@ -1,27 +1,37 @@
 interface IuserLogin {
-    username: string;
+    email: string;
     password: string;
 }
 
 interface Iadduser{
     accessToken: string;
 }
+
+
+interface IloginResponse{
+    id : number ;
+    accessToken : string ;
+}
+
 interface IuserSignup {
     username: string;
     email: string;
     password: string;
     // jobId: string;
 }
-
+interface IUserStore{
+    user : Iuser ;
+    token : string 
+}
 interface JobProfile {
     id: number;
     userId?: number;
     title: string;
 }
 
-interface IuserProfile {
+interface Iuser {
     id: number;
-    username: string;
+    username?: string;
     email: string;
     bio?: string; // backend needs to be updated to include bio
     pfp?: string; // profile picture
@@ -35,5 +45,5 @@ interface IusersOnline{
 }
 
 
-export type { IuserLogin, IuserSignup, IuserProfile , IusersOnline, JobProfile , Iadduser};
+export type { IuserLogin, IuserSignup, Iuser , IusersOnline, JobProfile , Iadduser , IUserStore , IloginResponse };
 

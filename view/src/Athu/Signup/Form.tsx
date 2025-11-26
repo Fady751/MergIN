@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Form.css";
-// import { IuserSignup } from "../../Types/Iuser";
 import { AddUser} from "../../Service/UserService";
+
+
 
 function signup() {
   const navigate = useNavigate();
@@ -63,6 +64,7 @@ function signup() {
       }
     
       console.log("Signup success:", response);
+
       navigate("/");
     
     } catch (error) {

@@ -1,6 +1,9 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import {setUser} from "../../Store/Slices/UserSlice"
+import {login} from "../../Service/UserService";
 import "./Form.css";
+import { Token } from "graphql";
 
 function signIn() {
   const navigate = useNavigate();
@@ -14,9 +17,40 @@ function signIn() {
 
   // setError("invalid email or password");
 
-  const HandleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-      event.preventDefault();
-      setError("");
+  const HandleSubmit = async (event: React.FormEvent<HTMLFormElement> | React.MouseEvent<HTMLButtonElement>) => {
+
+    event.preventDefault();
+
+    setError("");
+
+    try{
+
+      const response = await login(Data) ;
+      
+      // console.log(response) ;
+
+
+      if(response == null){
+        setError("Invalid Email or Password");
+        return ;
+      }
+
+      // console.log("here") ;
+
+      navigate("/Home") ;
+      setUser({
+        user: {
+          email: Data.email,
+          id: response.id,
+        },
+        token: response.accessToken,
+      });
+        
+    }
+    catch(error){
+      console.log("error in login" , error) ;
+    }
+
   }
 
   const HandleInputChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -35,7 +69,7 @@ function signIn() {
     <div className="container">
       <h1>Welcome</h1>
 
-      <form action="submit">
+      <form onSubmit={HandleSubmit}>
         <div className="input-container">
           <label htmlFor="email" className="label">
             Email
@@ -60,18 +94,18 @@ function signIn() {
             value={Data.password}
             required
           />
-          {/* {error && <p className='error'>{error}</p>} */}
+          {error.length != 0 && <p className='error'>{error}</p>}
         </div>
 
         <div className="options">
           <a href="/">Forget Password ?</a>
-          <button type="submit" className="btn">
+          <button type="submit" className="btn" onClick={HandleSubmit}>
             Sign In
           </button>
         </div>
       </form>
 
-      <button type="submit" className="btn_google">
+      <button type="button" className="btn_google">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           width="24"

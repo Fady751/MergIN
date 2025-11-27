@@ -35,6 +35,7 @@ interface Iuser {
     email: string;
     bio?: string; // backend needs to be updated to include bio
     pfp?: string; // profile picture
+    
     JobProfiles?: JobProfile[];
 }
 

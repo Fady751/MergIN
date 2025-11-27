@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Form.css";
 import { AddUser} from "../../Service/UserService";
@@ -31,11 +31,7 @@ function signup() {
     }));
   };
 
-  const HandleSubmit = async (
-    event:
-      | React.FormEvent<HTMLFormElement>
-      | React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
+  const HandleSubmit = async () => {
 
     setPasswordError("");
     
@@ -59,7 +55,7 @@ function signup() {
       });
 
       if(response == null){
-        setEmailError("Email already in use");
+        setEmailError("Email or username already in use");
         return;
       }
     

@@ -1,9 +1,11 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {setUser} from "../../Store/Slices/UserSlice"
 import {login} from "../../Service/UserService";
 import "./Form.css";
-import { Token } from "graphql";
+import type {
+  Iuser as User,
+} from "../../Types/Iuser";
 
 function signIn() {
   const navigate = useNavigate();
@@ -25,9 +27,9 @@ function signIn() {
 
     try{
 
-      const response = await login(Data) ;
+      const response: (User & {accessToken: string}) | null = await login(Data);
       
-      // console.log(response) ;
+      console.log(response) ;
 
 
       if(response == null){
@@ -39,13 +41,11 @@ function signIn() {
 
       navigate("/Home") ;
       setUser({
-        user: {
-          email: Data.email,
-          id: response.id,
-        },
-        token: response.accessToken,
+        user: response
       });
-        
+      
+      localStorage.setItem("token" , response.accessToken);
+      localStorage.setItem("userid" , response.id.toString());
     }
     catch(error){
       console.log("error in login" , error) ;

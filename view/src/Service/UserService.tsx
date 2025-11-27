@@ -1,19 +1,16 @@
 import type {
   Iuser as User,
-  IusersOnline as onlineUser,
   IuserSignup as signupUser,
   IuserLogin as loginUser ,
-  IloginResponse ,
-  Iadduser as token,
 } from "../Types/Iuser";
 
 import { gql } from "@apollo/client";
 import { client } from "../apollo";
 
-async function getUserById(id: number): Promise<User | null> {
+async function getUser(): Promise<User | null> {
   const GET_USER_BY_ID = gql`
-    query GetUser($id: Int!) {
-      user(id: $id) {
+    query GetUser {
+      user {
         id
         username
         email
@@ -27,13 +24,12 @@ async function getUserById(id: number): Promise<User | null> {
 
   try {
     const { data } = await client.query<{ user: User }>({
-      query: GET_USER_BY_ID,
-      variables: { id },
+      query: GET_USER_BY_ID
     });
 
     return data.user || null;
   } catch (error) {
-    // console.error("Error fetching user:", error);
+    console.error("Error fetching user:", error);
     return null;
   }
 }
@@ -46,10 +42,8 @@ async function AddUser({
   const Add_User = gql`
     mutation CreateUser($input: CreateUserInput!) {
       createUser(createUserInput: $input) {
-      user{
-        id 
-      }
-      accessToken
+        id
+        accessToken
       }
     }
   `;
@@ -74,16 +68,19 @@ async function AddUser({
 }
 
 
-async function login ({email , password} : loginUser) : Promise< IloginResponse | null >{
+async function login ({email , password} : loginUser) : Promise<(User & {accessToken: string}) | null >{
 
   const query =gql`
       mutation {
         loginUser(email: "${email}", password: "${password}") {
           id
+          username
+          # pfp
+          email
           accessToken
         }
       }
-    `;
+  `;
 
   try {
 
@@ -95,7 +92,7 @@ async function login ({email , password} : loginUser) : Promise< IloginResponse 
       },
     });
 
-    return data || null ;
+    return data.loginUser || null ;
 
   }catch(error){
     console.log("error on login user" , error);
@@ -104,4 +101,4 @@ async function login ({email , password} : loginUser) : Promise< IloginResponse 
 }
 
 
-export {  AddUser, getUserById , login };
+export {  AddUser, getUser, login };

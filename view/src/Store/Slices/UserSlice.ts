@@ -1,11 +1,10 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import type { PayloadAction } from '@reduxjs/toolkit';
-import { getUserById } from '../../Service/UserService'; // Adjust path as necessary
+import { getUser } from '../../Service/UserService'; // Adjust path as necessary
 import type { Iuser as User } from '../../Types/Iuser';
 
 interface UserState {
   user: User | null;
-  token: string | null;
   error: string | null;
   loading: boolean;
   isLoggedIn: boolean;
@@ -14,17 +13,16 @@ interface UserState {
 // Initial state
 const initialState: UserState = {
   user: null,
-  token: null,
   error: null,
   loading: false,
   isLoggedIn: false,
 };
 
 // Async thunk
-export const fetchUser = createAsyncThunk<{ user: User }, number>(
+export const fetchUser = createAsyncThunk<{ user: User }>(
   'user/fetchUser',
-  async (id: number) => {
-    const user = await getUserById(id);
+  async () => {
+    const user = await getUser();
     if (!user) throw new Error('User not found');
     return { user };
   }
@@ -35,16 +33,21 @@ const userSlice = createSlice({
   name: 'userSlice',
   initialState,
   reducers: {
-    setUser(state, action: PayloadAction<{ user: User; token: string }>) {
+    setUser(state, action: PayloadAction<{ user: User | null }>) {
+      if(action.payload.user == null){
+        state.user = null;
+        state.error = null;
+        state.loading = false;
+        state.isLoggedIn = false;
+        return;
+      }
       state.user = action.payload.user;
-      state.token = action.payload.token || null;
       state.error = null;
       state.loading = false;
       state.isLoggedIn = true;
     },
     clearUser(state) {
       state.user = null;
-      state.token = null;
       state.error = null;
       state.loading = false;
       state.isLoggedIn = false;
@@ -58,7 +61,6 @@ const userSlice = createSlice({
       })
       .addCase(fetchUser.fulfilled, (state, action) => {
         state.user = action.payload.user;
-        state.token = localStorage.getItem('token') || null;
         state.loading = false;
         state.error = null;
         state.isLoggedIn = true;

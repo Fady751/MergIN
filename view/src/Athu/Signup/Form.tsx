@@ -138,7 +138,7 @@ function signup() {
           <select
             value={Data.jobId}
             onChange={HandleInputChange}
-            className="dropdown"
+            className="dropdown-list"
             name="jobId"
             required
           >
